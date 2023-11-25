@@ -1,0 +1,217 @@
+/*Program.cs
+ * 
+ * Assignment 5
+ * To make a example main menu game
+ * Revision History 11-25/2023 Jimmy Nokeo
+ */
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace assignment5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int select;
+            bool retry = true;
+
+            Console.WriteLine("Welcome to Fantasy Adventure 2! Please select an option \n");
+
+            do
+            {
+
+                Console.WriteLine("1. Add New Character");
+                Console.WriteLine("2. Edit Exisiting Character");
+                Console.WriteLine("3. Delete Character");
+                Console.WriteLine("4. Display All Characters");
+                Console.WriteLine("5. Exit");
+                try
+                {
+                    select = Convert.ToInt32(Console.ReadLine());
+                    if (select == 1)
+                    {
+
+                        List<String> charList;
+                        charList = addCharacters();
+                        Console.ReadKey();
+
+                    }
+                    else if (select == 2)
+                    { 
+                        Console.ReadKey();
+                    }
+                    else if (select == 3)
+                    {
+
+                        Console.ReadKey();
+                    }
+                    else if (select == 4)
+                    {
+
+                        Console.ReadKey();
+                    }
+                    else if (select == 5)
+                    {
+
+                        Console.ReadKey();
+                    }
+                    else if (select < 1 || select > 5)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid Input, Please select a value between 1-5");
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    Console.WriteLine("Invalid Input, Please select a value between 1-5");
+                }
+
+
+
+
+            }
+            while (retry == true);
+            Console.ReadKey();
+
+
+        }
+     
+        static List<String> addCharacters()
+        {
+            Console.Clear();
+
+            string name, type;
+            int level;
+            bool nameRetry = true;
+            bool typeRetry = true;
+            bool levelRetry = true;
+
+
+            List<String> characterList = new List<String>();
+
+            while (nameRetry == true)
+            {
+                Console.WriteLine("Please enter a Character Name!");
+                name = Convert.ToString(Console.ReadLine());
+                if (name == "")
+                {
+                    Console.WriteLine("Cannot have a Blank Character Name");
+                    nameRetry = true;
+                }
+                else
+                {
+                    nameRetry = false;
+                    characterList.Add(name);
+
+                }
+            }
+            while (typeRetry == true)
+            {
+
+
+                Console.WriteLine("Please Enter a Character Type!");
+                type = Convert.ToString(Console.ReadLine());
+                if (type == "")
+                {
+                    Console.WriteLine("Cannot have a Blank Character Type");
+                    typeRetry = true;
+                }
+                else
+                {
+                    typeRetry = false;
+                    characterList.Add(type);
+                }
+
+            }
+
+
+
+
+            while (levelRetry == true)
+            {
+                try
+                {
+                    Console.WriteLine("Please Enter a Character Level! (1-25) ");
+                    level = Convert.ToInt32(Console.ReadLine());
+                    if (level < 1 || level > 25)
+                    {
+                        levelRetry = true;
+                    }
+                    else if (level > 0 && level <= 25)
+                    {
+                        levelRetry = false;
+                        characterList.Add(level.ToString());
+                    }
+
+
+
+                }
+                catch (ArgumentNullException)
+                {
+                    Console.WriteLine("Please enter something man");
+
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid Level! Please Enter a value from 1-25");
+
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    Console.WriteLine("Level must be between 1-25");
+                }
+
+
+            }
+            Console.WriteLine("End of character creation screen");
+            return characterList;
+
+        }
+        static void editCharacter()
+        {
+            List<String> charlist;
+            charlist = addCharacters();
+            string editName;
+
+            Console.WriteLine("Enter the name of the Character you wish to edit");
+            editName = Console.ReadLine();
+            int position = editName.IndexOf(Console.ReadLine());
+            if (position != -1)
+            {
+                Console.WriteLine(position.ToString());
+            }
+            Console.WriteLine("end of program");
+
+
+            Console.ReadKey();
+        }
+
+                
+
+
+
+        }
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
