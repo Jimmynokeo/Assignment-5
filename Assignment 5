@@ -18,8 +18,12 @@ namespace assignment5
     {
         static void Main(string[] args)
         {
+            List<string> characterName = new List<string>();
+            List<string> characterType = new List<string>();
+            List<int> characterLevel = new List<int>();
             int select;
             bool retry = true;
+            
 
             Console.WriteLine("Welcome to Fantasy Adventure 2! Please select an option \n");
 
@@ -36,14 +40,97 @@ namespace assignment5
                     select = Convert.ToInt32(Console.ReadLine());
                     if (select == 1)
                     {
+                        Console.Clear();
 
-                        List<String> charList;
-                        charList = addCharacters();
-                        Console.ReadKey();
+                        string name, type;
+                        int level;
+                        bool nameRetry = true;
+                        bool typeRetry = true;
+                        bool levelRetry = true;
 
+                        while (nameRetry == true)
+                        {
+                            Console.WriteLine("Please enter a Character Name!");
+                            name = Convert.ToString(Console.ReadLine());
+                            if (name == "")
+                            {
+                                Console.WriteLine("Cannot have a Blank Character Name");
+                                nameRetry = true;
+                            }
+                            else
+                            {
+                                nameRetry = false;
+                                characterName.Add(name);
+                                characterName.Add("John");
+
+                            }
+                        }
+                        while (typeRetry == true)
+                        {
+
+
+                            Console.WriteLine("Please Enter a Character Type!");
+                            type = Convert.ToString(Console.ReadLine());
+                            if (type == "")
+                            {
+                                Console.WriteLine("Cannot have a Blank Character Type");
+                                typeRetry = true;
+                            }
+                            else
+                            {
+                                typeRetry = false;
+                                characterType.Add(type);
+                            }
+
+                        }
+
+                        while (levelRetry == true)
+                        {
+                            try
+                            {
+                                
+                                Console.WriteLine("Please Enter a Character Level! (1-25) ");
+                                level = Convert.ToInt32(Console.ReadLine());
+                                if (level < 1 || level > 25)
+                                {
+                                    levelRetry = true;
+                                }
+                                else if (level > 0 && level <= 25)
+                                {
+                                        levelRetry = false;
+                                    characterLevel.Add(level);
+                                    
+                                }
+
+
+
+                            }
+                            catch (ArgumentNullException)
+                            {
+                                Console.WriteLine("Please enter something man");
+
+                            }
+                            catch (FormatException)
+                            {
+                                Console.WriteLine("Invalid Level! Please Enter a value from 1-25");
+
+                            }
+                            catch (ArgumentOutOfRangeException)
+                            {
+                                Console.WriteLine("Level must be between 1-25");
+                            }
+
+
+                        }
                     }
                     else if (select == 2)
-                    { 
+                    {
+                        string nameEdit;
+                        Console.WriteLine("What is the name of the character you want to edit?");
+                        nameEdit = Convert.ToString(Console.ReadLine());
+
+                       // int position = characterName.IndexOf(Console.ReadLine());
+                         int position = characterName.IndexOf("John");
                         Console.ReadKey();
                     }
                     else if (select == 3)
@@ -58,8 +145,7 @@ namespace assignment5
                     }
                     else if (select == 5)
                     {
-
-                        Console.ReadKey();
+                        retry = false;
                     }
                     else if (select < 1 || select > 5)
                     {
@@ -85,8 +171,8 @@ namespace assignment5
 
 
         }
-     
-        static List<String> addCharacters()
+
+        /*static List<String> addCharacters()
         {
             Console.Clear();
 
@@ -174,10 +260,10 @@ namespace assignment5
 
             }
             Console.WriteLine("End of character creation screen");
-            return characterList;
+            return characterList;*/
 
         }
-        static void editCharacter()
+       /* static void editCharacter()
         {
             List<String> charlist;
             charlist = addCharacters();
@@ -194,22 +280,13 @@ namespace assignment5
 
 
             Console.ReadKey();
-        }
-
-                
-
-
-
-        }
+        }*/
 
 
 
 
 
     }
-
-
-
 
 
 
