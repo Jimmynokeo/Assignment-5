@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -135,10 +136,14 @@ namespace assignment5
 
                             if (position == -1)
                             {
-                                Console.WriteLine("Character not Found");
+                                Console.WriteLine("Character not Found\nReturning To Main Menu");
+                                Console.WriteLine($"Here this is the postion of said name: {position}");
                             }
-                            Console.WriteLine($"Here this is the postion of said name: {position}");
-                            Console.ReadKey();
+                                else
+                            {
+                                Console.WriteLine($"\n\nHere are the details of {characterName[position]}:\n They are a {characterType[position]} and they are level {characterLevel[position]}\n");
+                               
+                            }
                         }
                         catch (ArgumentException)
                         {
