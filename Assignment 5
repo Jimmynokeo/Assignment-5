@@ -23,7 +23,7 @@ namespace assignment5
             List<int> characterLevel = new List<int>();
             int select;
             bool retry = true;
-            
+
 
             Console.WriteLine("Welcome to Fantasy Adventure 2! Please select an option \n");
 
@@ -61,7 +61,7 @@ namespace assignment5
                             {
                                 nameRetry = false;
                                 characterName.Add(name);
-                                characterName.Add("John");
+
 
                             }
                         }
@@ -88,7 +88,7 @@ namespace assignment5
                         {
                             try
                             {
-                                
+
                                 Console.WriteLine("Please Enter a Character Level! (1-25) ");
                                 level = Convert.ToInt32(Console.ReadLine());
                                 if (level < 1 || level > 25)
@@ -97,9 +97,9 @@ namespace assignment5
                                 }
                                 else if (level > 0 && level <= 25)
                                 {
-                                        levelRetry = false;
+                                    levelRetry = false;
                                     characterLevel.Add(level);
-                                    
+
                                 }
 
 
@@ -128,10 +128,22 @@ namespace assignment5
                         string nameEdit;
                         Console.WriteLine("What is the name of the character you want to edit?");
                         nameEdit = Convert.ToString(Console.ReadLine());
+                        int position = characterName.IndexOf(nameEdit);
+                        try
+                        {
 
-                       // int position = characterName.IndexOf(Console.ReadLine());
-                         int position = characterName.IndexOf("John");
-                        Console.ReadKey();
+
+                            if (position == -1)
+                            {
+                                Console.WriteLine("Character not Found");
+                            }
+                            Console.WriteLine($"Here this is the postion of said name: {position}");
+                            Console.ReadKey();
+                        }
+                        catch (ArgumentException)
+                        {
+                            Console.WriteLine("Character not Found error argument");
+                        }
                     }
                     else if (select == 3)
                     {
@@ -262,31 +274,31 @@ namespace assignment5
             Console.WriteLine("End of character creation screen");
             return characterList;*/
 
-        }
-       /* static void editCharacter()
-        {
-            List<String> charlist;
-            charlist = addCharacters();
-            string editName;
-
-            Console.WriteLine("Enter the name of the Character you wish to edit");
-            editName = Console.ReadLine();
-            int position = editName.IndexOf(Console.ReadLine());
-            if (position != -1)
-            {
-                Console.WriteLine(position.ToString());
-            }
-            Console.WriteLine("end of program");
-
-
-            Console.ReadKey();
-        }*/
-
-
-
-
-
     }
+    /* static void editCharacter()
+     {
+         List<String> charlist;
+         charlist = addCharacters();
+         string editName;
+
+         Console.WriteLine("Enter the name of the Character you wish to edit");
+         editName = Console.ReadLine();
+         int position = editName.IndexOf(Console.ReadLine());
+         if (position != -1)
+         {
+             Console.WriteLine(position.ToString());
+         }
+         Console.WriteLine("end of program");
+
+
+         Console.ReadKey();
+     }*/
+
+
+
+
+
+}
 
 
 
