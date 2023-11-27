@@ -1,311 +1,240 @@
-/*Program.cs
+/*
+ * Program.cs
  * 
- * Assignment 5
- * To make a example main menu game
- * Revision History 11-25/2023 Jimmy Nokeo
+ * A example of a character creation for adventure game where characters can be edited/deleted and displayed
+ * 
+ * Revision History
+ * 
+ *   Maruf, Shaikh, Jimmy Nokeo 11-26-2023
+ *                              
  */
-
-
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace assignment5
-{
-    class Program
+class Assignment4
+{// Creation of lists to be used for methods later
+    static List<string> names = new List<string>();
+    static List<string> types = new List<string>();
+    static List<int> levels = new List<int>();
+
+    static void Main()
     {
-        static void Main(string[] args)
+        int choice;
+        //Main menu choices using switch/cases
+        do
         {
-            List<string> characterName = new List<string>();
-            List<string> characterType = new List<string>();
-            List<int> characterLevel = new List<int>();
-            int select;
-            bool retry = true;
+            Console.WriteLine("Main Menu");
+            Console.WriteLine("1. Add a New Character");
+            Console.WriteLine("2. edit existing character");
+            Console.WriteLine("3. Delete Character");
+            Console.WriteLine("4. Display All Characters");
+            Console.WriteLine("5. Exit");
 
-
-            Console.WriteLine("Welcome to Fantasy Adventure 2! Please select an option \n");
-
-            do
+            Console.Write("Enter your choice: ");
+            
+            if (int.TryParse(Console.ReadLine(), out choice))
             {
-
-                Console.WriteLine("1. Add New Character");
-                Console.WriteLine("2. Edit Exisiting Character");
-                Console.WriteLine("3. Delete Character");
-                Console.WriteLine("4. Display All Characters");
-                Console.WriteLine("5. Exit");
-                try
+                switch (choice)
                 {
-                    select = Convert.ToInt32(Console.ReadLine());
-                    if (select == 1)
-                    {
-                        Console.Clear();
-
-                        string name, type;
-                        int level;
-                        bool nameRetry = true;
-                        bool typeRetry = true;
-                        bool levelRetry = true;
-
-                        while (nameRetry == true)
-                        {
-                            Console.WriteLine("Please enter a Character Name!");
-                            name = Convert.ToString(Console.ReadLine());
-                            if (name == "")
-                            {
-                                Console.WriteLine("Cannot have a Blank Character Name");
-                                nameRetry = true;
-                            }
-                            else
-                            {
-                                nameRetry = false;
-                                characterName.Add(name);
-
-
-                            }
-                        }
-                        while (typeRetry == true)
-                        {
-
-
-                            Console.WriteLine("Please Enter a Character Type!");
-                            type = Convert.ToString(Console.ReadLine());
-                            if (type == "")
-                            {
-                                Console.WriteLine("Cannot have a Blank Character Type");
-                                typeRetry = true;
-                            }
-                            else
-                            {
-                                typeRetry = false;
-                                characterType.Add(type);
-                            }
-
-                        }
-
-                        while (levelRetry == true)
-                        {
-                            try
-                            {
-
-                                Console.WriteLine("Please Enter a Character Level! (1-25) ");
-                                level = Convert.ToInt32(Console.ReadLine());
-                                if (level < 1 || level > 25)
-                                {
-                                    levelRetry = true;
-                                }
-                                else if (level > 0 && level <= 25)
-                                {
-                                    levelRetry = false;
-                                    characterLevel.Add(level);
-
-                                }
-
-
-
-                            }
-                            catch (ArgumentNullException)
-                            {
-                                Console.WriteLine("Please enter something man");
-
-                            }
-                            catch (FormatException)
-                            {
-                                Console.WriteLine("Invalid Level! Please Enter a value from 1-25");
-
-                            }
-                            catch (ArgumentOutOfRangeException)
-                            {
-                                Console.WriteLine("Level must be between 1-25");
-                            }
-
-
-                        }
-                    }
-                    else if (select == 2)
-                    {
-                        string nameEdit;
-                        Console.WriteLine("What is the name of the character you want to edit?");
-                        nameEdit = Convert.ToString(Console.ReadLine());
-                        int position = characterName.IndexOf(nameEdit);
-                        try
-                        {
-
-
-                            if (position == -1)
-                            {
-                                Console.WriteLine("Character not Found\nReturning To Main Menu");
-                                Console.WriteLine($"Here this is the postion of said name: {position}");
-                            }
-                                else
-                            {
-                                Console.WriteLine($"\n\nHere are the details of {characterName[position]}:\n They are a {characterType[position]} and they are level {characterLevel[position]}\n");
-                               
-                            }
-                        }
-                        catch (ArgumentException)
-                        {
-                            Console.WriteLine("Character not Found error argument");
-                        }
-                    }
-                    else if (select == 3)
-                    {
-
-                        Console.ReadKey();
-                    }
-                    else if (select == 4)
-                    {
-
-                        Console.ReadKey();
-                    }
-                    else if (select == 5)
-                    {
-                        retry = false;
-                    }
-                    else if (select < 1 || select > 5)
-                    {
-                        throw new ArgumentOutOfRangeException();
-                    }
-
+                    case 1:
+                        AddNewCharacter();
+                        break;
+                    case 2:
+                        EditExistingCharacter();
+                        break;
+                    case 3:
+                        DeleteExistingCharacter();
+                        break;
+                    case 4:
+                        DisplayAllCharacters();
+                        break;
+                    case 5:
+                        Console.WriteLine("Exiting the game...Will see you soon,Goodbye!");
+                        Console.WriteLine("-----------------------------------------------------------------------------");
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
                 }
-                catch (FormatException)
-                {
-                    Console.WriteLine("Invalid Input, Please select a value between 1-5");
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    Console.WriteLine("Invalid Input, Please select a value between 1-5");
-                }
-
-
-
-
             }
-            while (retry == true);
-            Console.ReadKey();
+            else
+            {
+                Console.WriteLine("Invalid input. Please entter valid value");
+            }
+           
+        } while (choice != 5);
+    }
 
+    static void AddNewCharacter()
+    {// Character Creation of naming/entering the type and level for character
 
+        Console.Write("Enter the name of your Character - ");
+        string name = Console.ReadLine();
+
+        while (string.IsNullOrWhiteSpace(name) || names.Contains(name))
+        {
+            Console.Write("Invalid input or name already in use. Re-Enter Character Name - ");
+            name = Console.ReadLine();
         }
 
-        /*static List<String> addCharacters()
+        Console.Write("Enter the type of your Character - ");
+        string type = Console.ReadLine();
+
+        while (string.IsNullOrWhiteSpace(type))
         {
-            Console.Clear();
+            Console.Write("Invalid input. Re-Enter Character type - ");
+            type = Console.ReadLine();
+        }
 
-            string name, type;
-            int level;
-            bool nameRetry = true;
-            bool typeRetry = true;
-            bool levelRetry = true;
+        int level;
+        do
+        {
+            Console.Write("Enter the level of your character (10-25) - ");
+        } while (!int.TryParse(Console.ReadLine(), out level) || level < 10 || level > 25);
+        // Using 3 different lists for names,types and levels
+        names.Add(name);
+        types.Add(type);
+        levels.Add(level);
 
-
-            List<String> characterList = new List<String>();
-
-            while (nameRetry == true)
-            {
-                Console.WriteLine("Please enter a Character Name!");
-                name = Convert.ToString(Console.ReadLine());
-                if (name == "")
-                {
-                    Console.WriteLine("Cannot have a Blank Character Name");
-                    nameRetry = true;
-                }
-                else
-                {
-                    nameRetry = false;
-                    characterList.Add(name);
-
-                }
-            }
-            while (typeRetry == true)
-            {
-
-
-                Console.WriteLine("Please Enter a Character Type!");
-                type = Convert.ToString(Console.ReadLine());
-                if (type == "")
-                {
-                    Console.WriteLine("Cannot have a Blank Character Type");
-                    typeRetry = true;
-                }
-                else
-                {
-                    typeRetry = false;
-                    characterList.Add(type);
-                }
-
-            }
-
-
-
-
-            while (levelRetry == true)
-            {
-                try
-                {
-                    Console.WriteLine("Please Enter a Character Level! (1-25) ");
-                    level = Convert.ToInt32(Console.ReadLine());
-                    if (level < 1 || level > 25)
-                    {
-                        levelRetry = true;
-                    }
-                    else if (level > 0 && level <= 25)
-                    {
-                        levelRetry = false;
-                        characterList.Add(level.ToString());
-                    }
-
-
-
-                }
-                catch (ArgumentNullException)
-                {
-                    Console.WriteLine("Please enter something man");
-
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("Invalid Level! Please Enter a value from 1-25");
-
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    Console.WriteLine("Level must be between 1-25");
-                }
-
-
-            }
-            Console.WriteLine("End of character creation screen");
-            return characterList;*/
-
+        Console.WriteLine("hurray!!! the information of your character is saved in the system  successfully!");
+        Console.WriteLine("------------------------------------------------------------------------------------------------------");
     }
-    /* static void editCharacter()
-     {
-         List<String> charlist;
-         charlist = addCharacters();
-         string editName;
 
-         Console.WriteLine("Enter the name of the Character you wish to edit");
-         editName = Console.ReadLine();
-         int position = editName.IndexOf(Console.ReadLine());
-         if (position != -1)
-         {
-             Console.WriteLine(position.ToString());
-         }
-         Console.WriteLine("end of program");
+    static void EditExistingCharacter()
+    {// Editing characters that exisit within the database
+        Console.Write("Enter Character Name to edit - ");
+        string editName = Console.ReadLine();
 
+        int index = names.IndexOf(editName);
 
-         Console.ReadKey();
-     }*/
+        if (index == -1)
+        {
+            Console.WriteLine("Character not found. Returning to the main menu.");
+        }
+        else
+        {
+            Console.WriteLine($"Character Found: {names[index]}, Type: {types[index]}, Level: {levels[index]}");
 
+            int choice;
+            do
+            {// sub menu for editing names/type or level
+                Console.WriteLine("Edit Menu");
+                Console.WriteLine("1. Edit Name");
+                Console.WriteLine("2. Edit Type");
+                Console.WriteLine("3. Edit Level");
+                Console.WriteLine("4. Exit");
 
+                Console.Write("Enter your choice: ");
 
+                if (int.TryParse(Console.ReadLine(), out choice))
+                {
+                    switch (choice)
+                    {
+                        case 1:
+                            Console.Write("Enter new Name - ");
+                            string newName = Console.ReadLine();
 
+                            while (string.IsNullOrWhiteSpace(newName) || names.Contains(newName))
+                            {
+                                Console.Write("Invalid input or name already in use. Enter new Name again - ");
+                                newName = Console.ReadLine();
+                            }
 
+                            names[index] = newName;
+                            Console.WriteLine("Name updated successfully!");
+                            break;
+                        case 2:
+                            Console.Write("Enter new Type - ");
+                            string newType = Console.ReadLine();
+
+                            while (string.IsNullOrWhiteSpace(newType))
+                            {
+                                Console.Write("Invalid input. Enter new Type again - ");
+                                newType = Console.ReadLine();
+                            }
+
+                            types[index] = newType;
+                            Console.WriteLine("Type updated successfully!");
+                            break;
+                        case 3:
+                            int newLevel;
+                            do
+                            {
+                                Console.Write("Enter new Level (10-25) - ");
+                            } while (!int.TryParse(Console.ReadLine(), out newLevel) || newLevel < 10 || newLevel > 25);
+
+                            levels[index] = newLevel;
+                            Console.WriteLine("Level updated successfully!");
+                            break;
+                        case 4:
+                            Console.WriteLine("Exiting edit menu.");
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice. Please try again.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a number.");
+                }
+
+            } while (choice != 4);
+        }
+    }
+
+    static void DeleteExistingCharacter()
+    {// Deletion of existing characters by removing said data from lists
+        Console.Write("Enter Character Name to delete - ");
+        string deleteName = Console.ReadLine();
+
+        int index = names.IndexOf(deleteName);
+
+        if (index == -1)
+        {
+            Console.WriteLine("Character not found. Returning to the main menu.");
+        }
+        else
+        {
+            Console.WriteLine($"Character Found: {names[index]}, Type: {types[index]}, Level: {levels[index]}");
+            Console.Write("Confirm delete? (yes/no): ");
+            string confirmDelete = Console.ReadLine();
+
+            if (confirmDelete.ToLower() == "yes")
+            {
+                names.RemoveAt(index);
+                types.RemoveAt(index);
+                levels.RemoveAt(index);
+                Console.WriteLine("Character deleted successfully!");
+            }
+            else if (confirmDelete.ToLower() == "no")
+            {
+                Console.WriteLine("Delete cancelled. Returning to the main menu.");
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Delete cancelled. Returning to the main menu.");
+            }
+        }
+    }
+
+    static void DisplayAllCharacters()
+    {// displaying characters that have been created while using the program
+        if (names.Count == 0)
+        {
+            Console.WriteLine("No character records exist. Returning to the main menu.");
+        }
+        else
+        {
+            Console.WriteLine("All Characters:");
+
+            for (int i = 0; i < names.Count; i++)
+            {
+                Console.WriteLine($"Name: {names[i]}, Type: {types[i]}, Level: {levels[i]}");
+            }
+        }
+    }
 }
-
-
-
-
-
